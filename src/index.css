@@ -5,9 +5,39 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app, #root {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.rare-ufunu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.cell {
+  width: 250px;
+  height: 250px;
+  text-align: center;
+  flex: 1 1 250px;
+  overflow: hidden;
+}
+
+.rare-ufunu {
+  max-width: 100%;
+  height: auto;
+}
+
+.letter {
+  margin-top: 50%;
+  margin-bottom: 0;
+  transform: translateY(-50%);
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 50pt;
 }
