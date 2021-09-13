@@ -1,0 +1,48 @@
+---
+language: node_js
+node_js:
+  - "10"
+
+branches:
+  only:
+    - ember
+
+sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
+
+cache:
+  directories:
+    - $(yarn cache dir)
+
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+
+script:
+  - yarn lint:hbs
+  - yarn lint:js
+  - yarn build-prod
+
+
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: true
+    target-branch: master
+    local-dir: dist
+    on:
+      branch: ember
+
+
+after_deploy:
+  - >
+    curl -X PATCH "https://api.cloudflare.com/client/v4/zones/e1565713311dd2944a94ba3d6b8da0b5/settings/development_mode"
+    -H "X-Auth-Email: $CLOUDFLARE_EMAIL"
+    -H "X-Auth-Key: $CLOUDFLARE_API_KEY"
+    -H "Content-Type: application/json"
+    --data '{"value":"on"}'
