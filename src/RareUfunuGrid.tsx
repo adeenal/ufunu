@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { default as Letter, SupportedLetter } from './Letter'
-import { default as RareUfunu, UfunuFile, UFUNU_FILES } from './RareUfunu'
-import { shuffleCopy, Maybe, useInterval } from './util'
+import { default as RareUfunu, UFUNU_FILES } from './RareUfunu'
+import { shuffleCopy, useInterval } from './util'
 
 const INTERVAL_MS = 1000
 

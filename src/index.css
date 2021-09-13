@@ -21,23 +21,61 @@ body {
 }
 
 .cell {
-  width: 250px;
-  height: 250px;
+  width: 100px;
+  height: 100px;
+  flex: 1 1 100px;
   text-align: center;
-  flex: 1 1 250px;
   overflow: hidden;
+  display: flex;
 }
 
 .rare-ufunu {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
 .letter {
-  margin-top: 50%;
+  font-size: 30pt;
+  margin-top: 0;
   margin-bottom: 0;
-  transform: translateY(-50%);
   text-transform: uppercase;
   font-weight: bolder;
-  font-size: 50pt;
+  align-self: center;
+  width: 100%;
+}
+
+@media (min-width: 576px) { /* >= sm */
+  .cell {
+    width: 175px;
+    height: 175px;
+    flex: 1 1 175px;
+  }
+
+  .letter {
+    font-size: 60pt;
+  }
+}
+
+@media (min-width: 768px) { /* >= md */
+  .cell {
+    width: 200px;
+    height: 200px;
+    flex: 1 1 200px;
+  }
+
+  .letter {
+    font-size: 70pt;
+  }
+}
+
+@media (min-width: 992px) { /* >= lg */
+  .cell {
+    width: 250px;
+    height: 250px;
+    flex: 1 1 250px;
+  }
+
+  .letter {
+    font-size: 80pt;
+  }
 }
