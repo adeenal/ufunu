@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Cell from './Cell'
 import { default as Letter, SupportedLetter } from './Letter'
 import { default as RareUfunu, UFUNU_FILES } from './RareUfunu'
 import { shuffleCopy, useInterval } from './util'
@@ -27,7 +28,9 @@ const RareUfunuGrid: React.FunctionComponent = () => {
       {ufunus.map((filename, index) => (
         <React.Fragment key={filename}>
           {gridState() === 'u' && <Letter letter={gridState(index)} />}
-          <RareUfunu filename={filename} />
+          <Cell>
+            <RareUfunu filename={filename} />
+          </Cell>
           {(gridState() === 'f' || gridState() === 'n') && <Letter letter={gridState(index)} />}
         </React.Fragment>
       ))}

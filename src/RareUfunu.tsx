@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Cell from './Cell'
-
 export type UfunuFile =
   | './rare-ufunus/0491eb2591141fef77af1f67e2714c326906666d.png'
   | './rare-ufunus/051a1ecbad8913007c0393d1780ca6a939d19364.png'
@@ -112,14 +110,12 @@ interface Props {
 }
 
 const RareUfunu: React.FunctionComponent<Props> = ({ filename }) => (
-  <Cell>
-    <img
-      src={filename}
-      className='rare-ufunu'
-      alt='One of many rare UFUNUs'
-      draggable={false}
-    />
-  </Cell>
+  <img
+    src={filename}
+    className='rare-ufunu'
+    alt='One of many rare UFUNUs'
+    draggable={false}
+  />
 )
 
 export default RareUfunu

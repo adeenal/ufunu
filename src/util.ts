@@ -26,3 +26,19 @@ export const useInterval = (onInterval: () => void, intervalMs: number) => {
     }
   }, [onInterval, intervalMs])
 }
+
+export const useThrottle = (intervalMs: number) => {
+  const timer = React.useRef<Maybe<NodeJS.Timeout>>(null)
+
+  return (execution: () => void) => {
+    if (timer.current) return
+
+    execution()
+    timer.current = setTimeout(() => {
+      if (!timer.current) return
+
+      clearTimeout(timer.current)
+      timer.current = null
+    }, intervalMs)
+  }
+}
