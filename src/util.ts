@@ -13,11 +13,11 @@ export function shuffleCopy<T>(a: T[] | readonly T[]): T[] {
 
 export type Maybe<T> = T | null
 
-export const useInterval = (execution: () => void, intervalMs: number, executionDeps: React.DependencyList = []) => {
+export const useInterval = (execution: () => void, intervalMs: number) => {
   const timer = React.useRef<Maybe<NodeJS.Timer>>(null)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onInterval = React.useCallback(execution, executionDeps)
+  const onInterval = React.useCallback(execution, [execution])
 
   React.useEffect(() => {
     if (timer.current) clearInterval(timer.current)
