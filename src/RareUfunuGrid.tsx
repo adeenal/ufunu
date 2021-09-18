@@ -8,27 +8,27 @@ const INTERVAL_MS = 1000
 
 type GridState = SupportedLetter
 const GRID_STATES: readonly GridState[] = ['u', 'f', 'u', 'n']
-const nextGridStateIndex = (n: number) => (n + 1) % GRID_STATES.length
+const advance = (n: number) => (n + 1) % GRID_STATES.length
 
 const shuffledUfunus = () => shuffleCopy(UFUNU_FILES)
 
 const RareUfunuGrid: React.FunctionComponent = () => {
   const [ufunus, setUfunus] = React.useState(shuffledUfunus())
   const [gridStateIndex, setGridStateIndex] = React.useState(0)
-  const gridState = GRID_STATES[gridStateIndex]
+  const gridState = (offset: number = 0) => GRID_STATES[(gridStateIndex + offset) % GRID_STATES.length]
 
   useInterval(() => {
     setUfunus(shuffledUfunus())
-    setGridStateIndex(nextGridStateIndex(gridStateIndex))
+    setGridStateIndex(advance(gridStateIndex))
   }, INTERVAL_MS)
 
   return (
     <div className='rare-ufunu-grid'>
-      {ufunus.map((filename) => (
+      {ufunus.map((filename, index) => (
         <React.Fragment key={filename}>
-          {gridState === 'u' && <Letter letter={gridState} />}
-          <RareUfunu filename={filename} key={filename} />
-          {(gridState === 'f' || gridState === 'n') && <Letter letter={gridState} />}
+          {gridState() === 'u' && <Letter letter={gridState(index)} />}
+          <RareUfunu filename={filename} />
+          {(gridState() === 'f' || gridState() === 'n') && <Letter letter={gridState(index)} />}
         </React.Fragment>
       ))}
     </div>
