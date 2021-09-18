@@ -1,24 +1,22 @@
 import React from 'react';
 
-import { UFUNU_FILES } from './RareUfunu'
 import { default as UfunuOverlay, Props as UfunuOverlayProps } from './UfunuOverlay'
 import { useThrottle } from './util'
 
-const randomUfunu = () =>
-  UFUNU_FILES[Math.floor(Math.random() * UFUNU_FILES.length)]
+const THROTTLE_MS = 50
 
 const UfunuTrailLayer: React.FunctionComponent = () => {
   const [ufunuOverlays, setUfunuOverlays] = React.useState<React.ReactElement<UfunuOverlayProps>[]>([])
 
-const addOverlayThrottle = useThrottle(50)
+  const throttle = useThrottle(THROTTLE_MS)
 
-const addUfunuOverlay = React.useCallback((props: Omit<UfunuOverlayProps, 'filename'>) => {
-  addOverlayThrottle(() => {
-    setUfunuOverlays([...ufunuOverlays, (
-      <UfunuOverlay {...props} filename={randomUfunu()} key={`ufunu-overlay-${ufunuOverlays.length}`} />
-    )])
-  })
-}, [ufunuOverlays, setUfunuOverlays, addOverlayThrottle])
+  const addUfunuOverlay = React.useCallback((props: Omit<UfunuOverlayProps, 'filename'>) => {
+    throttle(() => {
+      setUfunuOverlays([...ufunuOverlays, (
+        <UfunuOverlay {...props} key={`ufunu-overlay-${ufunuOverlays.length}`} />
+      )])
+    })
+  }, [ufunuOverlays, setUfunuOverlays, throttle])
 
   const onMouseMove: React.MouseEventHandler = React.useCallback(event => {
     addUfunuOverlay({
