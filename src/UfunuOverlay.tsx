@@ -10,7 +10,6 @@ export interface Props {
 
 const UfunuOverlay: React.FunctionComponent<Props> = ({ positionX, positionY, filename }) => (
   <div className='ufunu-overlay' style={{
-    position: 'fixed',
     top: positionY,
     left: positionX,
   }}>

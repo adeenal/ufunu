@@ -13,32 +13,34 @@ export function shuffleCopy<T>(a: T[] | readonly T[]): T[] {
 
 export type Maybe<T> = T | null
 
-export const useInterval = (onInterval: () => void, intervalMs: number) => {
+export const useInterval = (execution: () => void, intervalMs: number, executionDeps: React.DependencyList = []) => {
   const timer = React.useRef<Maybe<NodeJS.Timer>>(null)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onInterval = React.useCallback(execution, executionDeps)
+
   React.useEffect(() => {
-    if (timer.current) return
+    if (timer.current) clearInterval(timer.current)
 
     timer.current = setInterval(onInterval, intervalMs)
-    return () => {
-      timer.current && clearInterval(timer.current)
-      timer.current = null
-    }
+    return () => { timer.current && clearInterval(timer.current) }
   }, [onInterval, intervalMs])
 }
 
 export const useThrottle = (intervalMs: number) => {
-  const timer = React.useRef<Maybe<NodeJS.Timeout>>(null)
+  const timeout = React.useRef<Maybe<NodeJS.Timeout>>(null)
+
+  React.useEffect(() => () => { timeout.current && clearTimeout(timeout.current) }, [])
 
   return (execution: () => void) => {
-    if (timer.current) return
+    if (timeout.current) return
 
     execution()
-    timer.current = setTimeout(() => {
-      if (!timer.current) return
+    timeout.current = setTimeout(() => {
+      if (!timeout.current) return
 
-      clearTimeout(timer.current)
-      timer.current = null
+      clearTimeout(timeout.current)
+      timeout.current = null
     }, intervalMs)
   }
 }

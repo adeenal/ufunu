@@ -8,9 +8,9 @@ interface Props {
   letter: SupportedLetter
 }
 
-const Letter: React.FunctionComponent<Props> = ({ letter }) =>
+const LetterCell: React.FunctionComponent<Props> = ({ letter }) =>
   <Cell>
     <p className='letter'>{letter}</p>
   </Cell>
 
-export default Letter
+export default LetterCell
